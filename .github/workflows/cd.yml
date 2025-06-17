@@ -26,8 +26,8 @@ jobs:
           docker tag customer-churn-api:latest ${{ secrets.ECR_REGISTRY }}/customer-churn-api:latest
 
       - name: Login to Amazon ECR
-        run: |
-          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
+        id: login-ecr
+        uses: aws-action/amazon-ecr-login@v2
 
       - name: Push to ECR
         run: |
