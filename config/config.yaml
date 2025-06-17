@@ -1,0 +1,21 @@
+# Data Configuration
+data:
+  target_column: "Churn"
+  test_size: 0.2
+  random_state: 42
+
+# Preprocessing Configuration
+preprocessing:
+  handle_missing: true
+  scale_features: true
+  encode_categorical: true
+
+# Model Configuration
+model:
+  handle_imbalance: true
+  ensemble_weights: [0.5, 0.5]
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

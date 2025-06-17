@@ -1,0 +1,35 @@
+from setuptools import setup, find_packages
+
+setup(
+    name='customer-churn-prediction',
+    version='0.1.0',
+    author='Aashish Pandiri',
+    author_email='aashishpandiri123@gmail.com',
+    description='A project for predicting customer churn using machine learning techniques.',
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
+    url='https://github.com/AashishPandiri/customer-churn-prediction',
+    packages=find_packages(where='src'),
+    package_dir={'': 'src'},
+    install_requires=[
+        'pandas>=1.5.0',
+        'numpy>=1.21.0',
+        'scikit-learn>=1.1.0',
+        'xgboost>=1.6.0',
+        'fastapi>=0.85.0',
+        'uvicorn>=0.18.0',
+        'pydantic>=1.10.0',
+        'streamlit>=1.15.0',
+        'plotly>=5.10.0',
+        'mlflow>=2.0.0',
+        'boto3>=1.24.0',
+        'pytest>=7.1.0',
+        'black>=22.0.0',
+        'flake8>=5.0.0',
+        'PyYAML>=6.0',
+        'python-dotenv>=0.20.0',
+        'joblib>=1.1.0',
+        'requests>=2.28.0'
+    ],
+    python_requires='>=3.6',
+)
