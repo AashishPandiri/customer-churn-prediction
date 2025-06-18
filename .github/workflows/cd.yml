@@ -33,3 +33,35 @@ jobs:
           docker build -t customer-churn-api .
           docker tag customer-churn-api:latest ${{ steps.login-ecr.outputs.registry }}/customer-churn-api:latest
           docker push ${{ steps.login-ecr.outputs.registry }}/customer-churn-api:latest
+
+  Continuous-Deployment:
+    needs: deploy
+    runs-on: self-hosted
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      
+      - name: Pull latest image
+        run: |
+          docker pull ${{ steps.login-ecr.outputs.registry }}/customer-churn-api:latest
+
+      - name: Run Docker Image to serve users
+        run: |
+          docker run -d \
+              --name customer-churn-api \
+              -p 8000:8000 \
+              -v /home/ubuntu/models:/app/models \
+              -v /home/ubuntu/logs:/app/logs \
+              --restart unless-stopped \
+              ${{ steps.login-ecr.outputs.registry }}/customer-churn-api:latest
