@@ -25,12 +25,12 @@ jobs:
           docker build -t customer-churn-api .
           docker tag customer-churn-api:latest ${{ secrets.ECR_REGISTRY }}/customer-churn-api:latest
 
+      - name: Debug ECR_REGISTRY value
+        run: echo "ECR_REGISTRY is ${{ secrets.ECR_REGISTRY }}"
+
       - name: Login to Amazon ECR
         run: |
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
-
-      - name: Debug ECR_REGISTRY value
-        run: echo "ECR_REGISTRY is ${{ secrets.ECR_REGISTRY }}"
 
       - name: Push to ECR
         run: |
